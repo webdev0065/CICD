@@ -22,7 +22,10 @@ namespace CICD.Controllers
         public IEnumerable<WeatherForecast> Get()
          
         {
-            Console.WriteLine("GetWeatherForecast nin");
+
+            Console.WriteLine("Hello World from dsfsfgsbg!");
+
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
@@ -30,6 +33,7 @@ namespace CICD.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+         
         }
     }
 }
