@@ -22,7 +22,7 @@ namespace CICD.Controllers
         public IEnumerable<WeatherForecast> Get()
          
         {
-            Console.WriteLine("GetWeatherForecast called");
+            Console.WriteLine("GetWeatherForecast nin");
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
