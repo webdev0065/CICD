@@ -23,7 +23,7 @@ namespace CICD.Controllers
          
         {
 
-            Console.WriteLine("Hello World from dsffgsbg!");
+            Console.WriteLine("Hello World !");
 
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
