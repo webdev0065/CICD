@@ -23,7 +23,7 @@ namespace CICD.Controllers
          
         {
 
-            Console.WriteLine("Hello in branch!");
+            Console.WriteLine("Hello in b ranch!");
 
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
