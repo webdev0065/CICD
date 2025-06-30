@@ -1,4 +1,4 @@
-name: Deploy .NET 8 Web API to EC2
+name: Deploy .Net 8 Web API to EC2
 
 on:
   push:
