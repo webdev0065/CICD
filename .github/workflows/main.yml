@@ -1,6 +1,7 @@
 name: Auto PR to master
 
 on:
+workflow_dispatch:
   push:
     branches:
       - webdev0065-patch-1
