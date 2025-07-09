@@ -2,12 +2,35 @@ name: Auto PR to master
 
 on:
   workflow_dispatch:
-    inputs:
-      draft:
-        description: 'Create pull request as draft?'
+inputs:
+      exported_resources_env:
+        description: 'Source environment where resources (e.g., flows, scripts) were originally exported from (Select environment you exported from previously, else choose same option as target environment)'
         required: true
-        type: boolean
-        default: false
+        type: choice
+        options:
+          - 'dev'
+          - 'uat'
+          - 'train'
+          - 'prod'
+        default: 'N/A'
+      plan-apply-option:
+        description: 'Choose to plan and apply or only see the plan (no manual validation required)'
+        required: true
+        type: choice
+        options:
+          - 'plan and apply'
+          - 'plan only'
+        default: 'plan and apply'
+      target_env:
+        description: 'Target environment to plan/ apply to (will require manual validation if applying too)'
+        required: true
+        type: choice
+        options:
+          - 'dev'
+          - 'uat'
+          - 'train'
+          - 'prod'
+        default: 'N/A'
 
 permissions:
   contents: write
