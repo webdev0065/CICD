@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Source branch to create PR from'
+        description: 'Use workflow from'
         required: true
         type: choice
         options:
@@ -12,13 +12,6 @@ on:
           - 'feature-xyz'
           - 'bugfix-123'
         default: 'webdev0065-patch-1'
-
-      draft:
-        description: 'Create pull request as draft?'
-        required: true
-        type: boolean
-        default: false
-
       exported_resources_env:
         description: 'Source environment where resources were originally exported from'
         required: true
