@@ -1,38 +1,33 @@
-name: Deploy .NET 8 Web API to EC2
+name: Auto PR to master
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      draft:
+        description: 'Create pull request as draft?'
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
-  build-and-deploy:
+  create-pull-request:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0'
-
-    - name: Publish the application
-      run: dotnet publish -c Release -o ./publish
-
-    - name: Setup SSH Agent
-      uses: webfactory/ssh-agent@v0.7.0
-      with:
-        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-
-    - name: Copy files to EC2
-      run: scp -o StrictHostKeyChecking=no -r ./publish/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/app
-
-    - name: Restart API on EC2
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          cd /home/${{ secrets.EC2_USER }}/app
-          pkill -f 'dotnet MyApi.dll' || echo 'No running process found'
-          nohup dotnet MyApi.dll > api.log 2>&1 &
-        EOF
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: master
+          head: webdev0065-patch-1
+          title: 'Auto PR from webdev0065-patch-1 to master'
+          body: |
+            This PR was automatically created by GitHub Actions
+            to merge changes from `webdev0065-patch-1` into `master`.
+          draft: ${{ inputs.draft }}
