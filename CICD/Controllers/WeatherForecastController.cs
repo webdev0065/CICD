@@ -23,6 +23,7 @@ namespace CICD.Controllers
         {
             Console.WriteLine("hii");
             Console.WriteLine("hello");
+            Console.WriteLine("hi");
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
