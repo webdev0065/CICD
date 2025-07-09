@@ -2,9 +2,25 @@ name: Auto PR to master
 
 on:
   workflow_dispatch:
-inputs:
+    inputs:
+      branch:
+        description: 'Source branch to create PR from'
+        required: true
+        type: choice
+        options:
+          - 'webdev0065-patch-1'
+          - 'feature-xyz'
+          - 'bugfix-123'
+        default: 'webdev0065-patch-1'
+
+      draft:
+        description: 'Create pull request as draft?'
+        required: true
+        type: boolean
+        default: false
+
       exported_resources_env:
-        description: 'Source environment where resources (e.g., flows, scripts) were originally exported from (Select environment you exported from previously, else choose same option as target environment)'
+        description: 'Source environment where resources were originally exported from'
         required: true
         type: choice
         options:
@@ -12,17 +28,19 @@ inputs:
           - 'uat'
           - 'train'
           - 'prod'
-        default: 'N/A'
+        default: 'dev'
+
       plan-apply-option:
-        description: 'Choose to plan and apply or only see the plan (no manual validation required)'
+        description: 'Choose to plan and apply or only plan'
         required: true
         type: choice
         options:
           - 'plan and apply'
           - 'plan only'
         default: 'plan and apply'
+
       target_env:
-        description: 'Target environment to plan/ apply to (will require manual validation if applying too)'
+        description: 'Target environment to plan/apply to'
         required: true
         type: choice
         options:
@@ -30,7 +48,7 @@ inputs:
           - 'uat'
           - 'train'
           - 'prod'
-        default: 'N/A'
+        default: 'dev'
 
 permissions:
   contents: write
@@ -53,5 +71,8 @@ jobs:
           title: "Auto PR from ${{ inputs.branch }} to master"
           body: |
             This PR was automatically created by GitHub Actions.
-            Changes from `${{ inputs.branch }}` will be merged into `master`.
+            - Branch: `${{ inputs.branch }}`
+            - Exported from: `${{ inputs.exported_resources_env }}`
+            - Target: `${{ inputs.target_env }}`
+            - Mode: `${{ inputs['plan-apply-option'] }}`
           draft: ${{ inputs.draft }}
