@@ -34,6 +34,12 @@ on:
           - 'prod'
         default: 'dev'
 
+      draft:
+        description: 'Create pull request as draft?'
+        required: true
+        type: boolean
+        default: false
+
 permissions:
   contents: write
   pull-requests: write
@@ -47,16 +53,4 @@ jobs:
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: master
-          head: webdev0065-patch-1
-          title: 'Auto PR from webdev0065-patch-1 to master'
-          body: |
-            This PR was automatically created by GitHub Actions
-            to merge changes from `webdev0065-patch-1` into `master`.
-
-            **Deployment context:**
-            - Exported from: `${{ inputs.exported_resources_env }}`
-            - Target environment: `${{ inputs.target_env }}`
-            - Operation: `${{ inputs['plan-apply-option'] }}`
+       
