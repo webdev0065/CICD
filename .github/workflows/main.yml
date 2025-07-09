@@ -2,9 +2,9 @@ name: Auto PR to master
 
 on:
   workflow_dispatch:
-inputs:
+    inputs:
       exported_resources_env:
-        description: 'Source environment where resources (e.g., flows, scripts) were originally exported from (Select environment you exported from previously, else choose same option as target environment)'
+        description: 'Source environment where resources (e.g., flows, scripts) were originally exported from'
         required: true
         type: choice
         options:
@@ -12,17 +12,19 @@ inputs:
           - 'uat'
           - 'train'
           - 'prod'
-        default: 'N/A'
+        default: 'dev'
+
       plan-apply-option:
-        description: 'Choose to plan and apply or only see the plan (no manual validation required)'
+        description: 'Choose to plan and apply or only see the plan'
         required: true
         type: choice
         options:
           - 'plan and apply'
           - 'plan only'
         default: 'plan and apply'
+
       target_env:
-        description: 'Target environment to plan/ apply to (will require manual validation if applying too)'
+        description: 'Target environment to plan/apply to'
         required: true
         type: choice
         options:
@@ -30,7 +32,7 @@ inputs:
           - 'uat'
           - 'train'
           - 'prod'
-        default: 'N/A'
+        default: 'dev'
 
 permissions:
   contents: write
@@ -53,4 +55,8 @@ jobs:
           body: |
             This PR was automatically created by GitHub Actions
             to merge changes from `webdev0065-patch-1` into `master`.
-          draft: ${{ inputs.draft }}
+
+            **Inputs:**
+            - Exported From: `${{ inputs.exported_resources_env }}`
+            - Target Environment: `${{ inputs.target_env }}`
+            - Mode: `${{ inputs['plan-apply-option'] }}`
