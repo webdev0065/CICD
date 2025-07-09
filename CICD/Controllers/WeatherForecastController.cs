@@ -21,10 +21,7 @@ namespace CICD.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            Console.WriteLine("hii");
-            Console.WriteLine("hello");
-            Console.WriteLine("hi");
-            Console.WriteLine("hello");
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
