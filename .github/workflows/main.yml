@@ -1,16 +1,17 @@
 name: Auto PR to master
 
 on:
-  push:
-    branches:
-      - webdev0065-patch-1
-
+  workflow_dispatch:
+    inputs:
+      draft:
+        description: 'Create pull request as draft?'
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: write
   pull-requests: write
-
-
 
 jobs:
   create-pull-request:
@@ -20,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: master
@@ -29,4 +30,4 @@ jobs:
           body: |
             This PR was automatically created by GitHub Actions
             to merge changes from `webdev0065-patch-1` into `master`.
-          draft: false
+          draft: ${{ inputs.draft }}
